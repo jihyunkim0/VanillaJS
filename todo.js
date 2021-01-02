@@ -7,7 +7,42 @@ const TODOS_LS = "toDos";
 //할 일을 화면에 띄우기 위해 저장해야 함.
 //항목이 많으니까 array에 저장.
 //toDos array생성(해야 할 일 생성될때 array에 추가)
-const toDos = [];
+// toDos를 cleanToDos로 교체하기 위해 상수에서 변수로 선언
+let toDos = [];
+
+/*
+//filter는 각각의 item과 같이 실행됨.
+//true일 경우에만 return
+//true인 item을 가지고 새로운 array를 만듦
+// 활용 : li에 없는 id인 toDos를 체크 => 지움
+function filterFn(toDo) {
+  return toDo.id === 1; //id가 1인 경우를 true라고 봄.
+}
+*/
+
+function deleteToDo(event) {
+  //console.log(event.target); //작동 확인, 버튼 식별을 위해 target사용
+  //문제는 버튼의 부모가 누군지 모름. (li의 id로 식별할 것임)
+  //console.dir(event.target); //parentNode 찾기
+  //console.log(event.target.parentNode); //식별 가능
+  const btn = event.target;
+  const li = btn.parentNode;
+  //delete child element mdn
+  toDoList.removeChild(li);
+
+  //삭제가 되지만, 새로고침하면 그대로임
+  // remove후에는 clean작업이 필요함
+  // filter()
+  //filterFn에서 true인 item을 가지고 새로운 array를 만듦
+  const cleanToDos = toDos.filter(function (toDo) {
+    //console.log(toDo.id, li.id); //확인
+    //return toDo.id !== li.id; //안되는 이유 : toDo.id는 숫자고, li.id는 string이다.
+    return toDo.id !== parseInt(li.id); //li의 string을 숫자로 바꿈
+  });
+  toDos = cleanToDos;
+  saveToDos(); //toDos를 저장하는 함수
+  console.log(cleanToDos);
+}
 
 //toDos array를 가져와서 로컬에 저장하는 일을 함
 //결과는 Key, Value에서 Value가 object..로 뜸
@@ -31,6 +66,7 @@ function paintToDo(text) {
   const delBtn = document.createElement("button"); //버튼 생성
   //[윈도우 + . (마침표)] =>이모지
   delBtn.innerText = "❌"; //value, innerHTML, innerText...
+  delBtn.addEventListener("click", deleteToDo);
   /*
   //fontawesome에서 가져온 이모티콘 사용하고 싶을 때
   const emoji = document.createElement("i");
@@ -77,6 +113,7 @@ function loadToDos() {
     //console.log(parsedToDos);
     //parsedToDos에 있는 것들을 paintToDo()을 통해 화면에 보이려고 한다.
     //그 전에 forEach로 array에서 하나씩 꺼내 함수를 실행하려 한다.
+    // 분리하는 이유는 삭제할 때 하나씩 삭제되도록 만들기 위해.
 
     //바로 만들어서 사용해도 되고, 밖에다 만들어서 써도 됨
     parsedToDos.forEach(function (toDo) {
