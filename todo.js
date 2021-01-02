@@ -65,6 +65,9 @@ function paintToDo(text) {
   const li = document.createElement("li"); //비어있는 li생성
   const delBtn = document.createElement("button"); //버튼 생성
   //[윈도우 + . (마침표)] =>이모지
+  delBtn.style.background = "transparent";
+  delBtn.style.border = "0px solid transparent";
+
   delBtn.innerText = "❌"; //value, innerHTML, innerText...
   delBtn.addEventListener("click", deleteToDo);
   /*

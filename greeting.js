@@ -31,6 +31,7 @@ function paintGreeting(text) {
   form.classList.remove(SHOWING_CN); //텍스트 색칠할 때 폼 숨기기
   greeting.classList.add(SHOWING_CN);
   greeting.innerText = `Hello ${text}`;
+  greeting.style.fontSize = "30px";
 }
 
 function loadName() {
