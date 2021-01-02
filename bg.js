@@ -1,7 +1,7 @@
 const body = document.querySelector("body");
 
 //사용할 이미지 개수
-const IMG_NUMBER = 3;
+const IMG_NUMBER = 5;
 
 // API사용중이라면 이렇게...?
 // function handleImgLoad() {
